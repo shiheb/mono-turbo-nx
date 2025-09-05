@@ -6,7 +6,6 @@ export default [
   ...baseConfig,
   {
     files: ['**/*.ts', '**/*.js'],
-    ignores: ['out-tsc/**/*'],
     // Override or add rules here
     rules: {},
   },
