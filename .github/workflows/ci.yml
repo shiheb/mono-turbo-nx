@@ -40,8 +40,8 @@ jobs:
 
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       # - run: npx nx-cloud record -- echo Hello World
-      - run: pnpm exec nx run-many -t lint test build typecheck
+      - run: npx nx run-many -t lint test build typecheck
 
-      # Nx Cloud recommends fixes for failures to help you get CI green faster
-      - run: pnpm exec nx fix-ci
+      # Use npx for fix-ci as well
+      - run: npx nx fix-ci
         if: always()
