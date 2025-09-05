@@ -35,10 +35,13 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
-
+      - uses: actions/cache@v4
+        with:
+          path: .nx/cache
+          key: nx-cache-${{ github.sha }}
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       # - run: npx nx-cloud record -- echo Hello World
-      - run: npx nx run-many -t lint test build typecheck
+      - run: npx nx run-many -t lint test build typecheck --skip-nx-cache
 
       # Use npx for fix-ci as well
       - run: npx nx fix-ci
