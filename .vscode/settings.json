@@ -1,0 +1,4 @@
+{
+  "nxConsole.generateAiAgentRules": true,
+  "secret-stack.promptToScanBeforePush": "30days"
+}

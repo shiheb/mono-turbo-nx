@@ -1,0 +1,10 @@
+{
+  "name": "@mono-turbo-nx/frontend-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@mono-turbo-nx/frontend"
+    ]
+  }
+}
