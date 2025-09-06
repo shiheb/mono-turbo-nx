@@ -8,7 +8,9 @@
     "lint": "nx lint",
     "format": "nx format:write",
     "frontend": "nx show project @mono-turbo-nx/frontend",
-    "backend": "nx show project @mono-turbo-nx/backend"
+    "backend": "nx show project @mono-turbo-nx/backend",
+    "ci": "npx nx run-many -t lint test build typecheck --skip-nx-cache",
+    "ci:f2e2": "nx run @mono-turbo-nx/frontend-e2e:e2e-ci"
   },
   "private": true,
   "devDependencies": {
