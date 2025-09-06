@@ -1,10 +1,31 @@
 {
   "name": "@mono-turbo-nx/frontend-e2e",
-  "version": "0.0.1",
-  "private": true,
-  "nx": {
-    "implicitDependencies": [
-      "@mono-turbo-nx/frontend"
-    ]
-  }
+  "projectType": "application",
+  "sourceRoot": "frontend-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/playwright:playwright",
+      "outputs": [
+        "{workspaceRoot}/dist/.playwright"
+      ],
+      "options": {
+        "config": "frontend-e2e/playwright.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "frontend-e2e/**/*.{js,ts}"
+        ]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": [
+    "@mono-turbo-nx/frontend"
+  ]
 }
