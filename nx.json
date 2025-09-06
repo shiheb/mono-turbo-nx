@@ -38,14 +38,6 @@
       "implicitDependencies": [
         "@mono-turbo-nx/backend"
       ]
-    },
-    "@mono-turbo-nx/frontend-e2e": {
-      "root": "frontend-e2e",
-      "sourceRoot": "frontend-e2e/src",
-      "projectType": "application",
-      "implicitDependencies": [
-        "@mono-turbo-nx/frontend"
-      ]
     }
   },
   "plugins": [
