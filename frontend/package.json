@@ -2,9 +2,70 @@
   "name": "@mono-turbo-nx/frontend",
   "version": "0.0.1",
   "private": true,
+  "nx": {
+    "targets": {
+      "build": {
+        "executor": "@nx/next:build",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "defaultConfiguration": "production",
+        "options": {
+          "root": "frontend",
+          "outputPath": "dist/frontend"
+        },
+        "configurations": {
+          "development": {},
+          "production": {}
+        }
+      },
+      "serve": {
+        "executor": "@nx/next:server",
+        "defaultConfiguration": "development",
+        "options": {
+          "buildTarget": "@mono-turbo-nx/frontend:build",
+          "dev": true
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "@mono-turbo-nx/frontend:build:development",
+            "dev": true
+          },
+          "production": {
+            "buildTarget": "@mono-turbo-nx/frontend:build:production",
+            "dev": false
+          }
+        }
+      },
+      "test": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{workspaceRoot}/coverage/frontend"
+        ],
+        "options": {
+          "jestConfig": "frontend/jest.config.ts",
+          "passWithNoTests": true
+        }
+      }
+    }
+  },
   "dependencies": {
-    "next": "~15.2.4",
+    "next": "15.2.5",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "tailwindcss": "3.4.3"
+  },
+  "devDependencies": {
+    "@nx/react": "21.4.1",
+    "@nx/next": "21.4.1",
+    "postcss": "8.4.38",
+    "autoprefixer": "10.4.13",
+    "@nx/jest": "21.4.1",
+    "jest": "^30.1.3",
+    "jest-environment-jsdom": "^30.1.2",
+    "@babel/preset-env": "^7.23.0",
+    "@babel/preset-react": "^7.23.0",
+    "@babel/preset-typescript": "^7.23.0",
+    "@testing-library/jest-dom": "^6.8.0"
   }
 }

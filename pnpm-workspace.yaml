@@ -1,11 +1,16 @@
 packages:
-  - 'apps/*'
-  - 'packages/*'
-  - 'frontend'
-  - 'backend'
-  - 'backend-e2e'
+  - apps/*
+  - packages/*
+  - frontend
+  - backend
+  - backend-e2e
+  - frontend-e2e
+
 onlyBuiltDependencies:
   - '@parcel/watcher'
-  - 'esbuild'
-  - 'sharp'
-  - 'unrs-resolver'
+  - '@swc/core'
+  - esbuild
+  - nx
+  - oxc-resolver
+  - sharp
+  - unrs-resolver

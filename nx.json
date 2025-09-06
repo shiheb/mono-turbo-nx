@@ -1,7 +1,10 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",
@@ -12,9 +15,31 @@
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s"
     ],
-    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+    "sharedGlobals": [
+      "{workspaceRoot}/.github/workflows/ci.yml"
+    ]
   },
   "nxCloudId": "68bb05d85ea3cd1b681ea043",
+  "projects": {
+    "@mono-turbo-nx/backend": {
+      "root": "backend",
+      "sourceRoot": "backend/src",
+      "projectType": "application"
+    },
+    "@mono-turbo-nx/frontend": {
+      "root": "frontend",
+      "sourceRoot": "frontend/src",
+      "projectType": "application"
+    },
+    "@mono-turbo-nx/backend-e2e": {
+      "root": "backend-e2e",
+      "sourceRoot": "backend-e2e/src",
+      "projectType": "application",
+      "implicitDependencies": [
+        "@mono-turbo-nx/backend"
+      ]
+    }
+  },
   "plugins": [
     {
       "plugin": "@nx/js/typescript",
@@ -39,7 +64,10 @@
         "serveStaticTargetName": "serve-static",
         "buildDepsTargetName": "build-deps",
         "watchDepsTargetName": "watch-deps"
-      }
+      },
+      "exclude": [
+        "frontend-e2e/**/*"
+      ]
     },
     {
       "plugin": "@nx/playwright/plugin",
@@ -58,17 +86,26 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["backend-e2e/**/*"]
+      "exclude": [
+        "backend-e2e/**/*"
+      ]
     }
   ],
   "targetDefaults": {
     "test": {
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build"
+      ]
     },
     "@nx/esbuild:esbuild": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
     }
   },
   "generators": {
