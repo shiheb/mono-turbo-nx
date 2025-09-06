@@ -30,23 +30,6 @@ jobs:
 
       # Clear Nx cache
       - run: npx nx reset
-
-      # Debug step: Check nx.json content
-      - name: Debug nx.json configuration
-        run: |
-          echo "=== Current nx.json content ==="
-          cat nx.json | jq '.projects'
-          echo "=== Directory structure ==="
-          ls -la
-          echo "=== frontend-e2e directory ==="
-          ls -la frontend-e2e/ || echo "frontend-e2e directory not found"
-          echo "=== Nx projects detection ==="
-          npx nx show projects || echo "Failed to show projects"
-      - name: Debug frontend-e2e package.json
-        run: |
-          echo "=== frontend-e2e/package.json content ==="
-          cat frontend-e2e/package.json
-
       - uses: actions/cache@v4
         with:
           path: .nx/cache
