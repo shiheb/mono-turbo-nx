@@ -64,7 +64,10 @@
         "serveStaticTargetName": "serve-static",
         "buildDepsTargetName": "build-deps",
         "watchDepsTargetName": "watch-deps"
-      }
+      },
+      "exclude": [
+        "frontend-e2e/**/*"
+      ]
     },
     {
       "plugin": "@nx/playwright/plugin",
