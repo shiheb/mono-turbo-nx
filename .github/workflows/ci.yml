@@ -28,12 +28,28 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      # Clear Nx cache
+      - run: npx nx reset
+
+      # Debug step: Check nx.json content
+      - name: Debug nx.json configuration
+        run: |
+          echo "=== Current nx.json content ==="
+          cat nx.json | jq '.projects'
+          echo "=== Directory structure ==="
+          ls -la
+          echo "=== frontend-e2e directory ==="
+          ls -la frontend-e2e/ || echo "frontend-e2e directory not found"
+          echo "=== Nx projects detection ==="
+          npx nx show projects || echo "Failed to show projects"
+
       - uses: actions/cache@v4
         with:
           path: .nx/cache
           key: nx-cache-${{ github.sha }}
           restore-keys: |
             nx-cache-
+
       - run: npx nx graph --file=project-graph.json
       - run: npx nx run-many -t lint test build typecheck --skip-nx-cache
 
