@@ -4,6 +4,7 @@ packages:
   - frontend
   - backend
   - backend-e2e
+  - frontend-e2e
 
 onlyBuiltDependencies:
   - '@parcel/watcher'
