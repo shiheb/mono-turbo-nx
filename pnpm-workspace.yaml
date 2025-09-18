@@ -8,7 +8,9 @@ packages:
 
 onlyBuiltDependencies:
   - '@parcel/watcher'
+  - '@scarf/scarf'
   - '@swc/core'
+  - bcrypt
   - esbuild
   - nx
   - oxc-resolver

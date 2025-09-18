@@ -7,10 +7,20 @@
     "outDir": "dist",
     "types": ["jest", "node"],
     "rootDir": "src",
-    "tsBuildInfoFile": "dist/tsconfig.spec.tsbuildinfo"
+    "tsBuildInfoFile": "dist/tsconfig.spec.tsbuildinfo",
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    }
   },
   "include": [
-    "jest.config.js",
+    "jest.config.cjs",
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
     "src/**/*.ts"
@@ -20,6 +30,7 @@
     "dist",
     "eslint.config.js",
     "eslint.config.cjs",
-    "eslint.config.mjs"
+    "eslint.config.mjs",
+    "node_modules"
   ]
 }

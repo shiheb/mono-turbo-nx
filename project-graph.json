@@ -660,7 +660,7 @@
               "executor": "@nx/jest:jest",
               "options": {
                 "passWithNoTests": true,
-                "jestConfig": "backend/jest.config.js",
+                "jestConfig": "backend/jest.config.cjs",
                 "tsConfig": "backend/tsconfig.spec.json"
               },
               "outputs": [

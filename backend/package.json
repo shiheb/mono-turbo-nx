@@ -2,6 +2,8 @@
   "name": "@mono-turbo-nx/backend",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
+  "scripts": {},
   "nx": {
     "targets": {
       "build": {
@@ -14,18 +16,24 @@
           "platform": "node",
           "outputPath": "backend/dist",
           "format": [
-            "cjs"
+            "esm"
           ],
           "bundle": false,
-          "main": "backend/src/main.ts",
+          "main": "backend/src/index.ts",
           "tsConfig": "backend/tsconfig.app.json",
           "assets": [
-            "backend/src/assets"
+            "backend/src/assets",
+            "backend/.env",
+            {
+              "input": "backend/src/templates",
+              "output": "templates",
+              "glob": "**/*"
+            }
           ],
           "esbuildOptions": {
             "sourcemap": true,
             "outExtension": {
-              ".js": ".js"
+              ".js": ".mjs"
             }
           }
         },
@@ -35,10 +43,26 @@
             "esbuildOptions": {
               "sourcemap": false,
               "outExtension": {
-                ".js": ".js"
+                ".js": ".mjs"
               }
             }
           }
+        },
+        "dependsOn": [
+          {
+            "target": "prebuild",
+            "projects": "self"
+          }
+        ]
+      },
+      "prebuild": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "tsc --project backend/tsconfig.app.json --noEmit",
+            "tsc-alias -p backend/tsconfig.app.json"
+          ],
+          "parallel": false
         }
       },
       "prune-lockfile": {
@@ -95,26 +119,104 @@
           }
         }
       },
+      "dev": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "rm -rf backend/dist",
+            "NODE_ENV=development tsx watch --clear-screen=false --tsconfig backend/tsconfig.app.json -r tsconfig-paths/register backend/src/index.ts"
+          ],
+          "parallel": false
+        }
+      },
+      "seed": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "ts-node --files -r tsconfig-paths/register backend/src/seeds"
+        }
+      },
       "test": {
         "executor": "@nx/jest:jest",
         "options": {
           "passWithNoTests": true,
-          "jestConfig": "backend/jest.config.js",
+          "jestConfig": "backend/jest.config.cjs",
           "tsConfig": "backend/tsconfig.spec.json"
         },
         "outputs": [
           "{workspaceRoot}/test-output/jest/coverage"
         ]
+      },
+      "lint": {
+        "executor": "@nx/eslint:lint",
+        "options": {
+          "lintFilePatterns": [
+            "backend/src/**/*.ts"
+          ]
+        }
       }
     }
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "bcrypt": "6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "2.8.5",
+    "dotenv": "17.2.2",
+    "ejs": "3.1.10",
+    "email-templates": "12.0.3",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "http-status-codes": "2.3.0",
+    "i18next": "22.4.9",
+    "i18next-http-middleware": "3.8.0",
+    "jsonwebtoken": "9.0.2",
+    "mime": "^4.0.7",
+    "mongoose": "8.18.0",
+    "mongoose-to-swagger": "^1.5.1",
+    "multer": "2.0.2",
+    "nodemailer": "7.0.6",
+    "randomstring": "1.3.1",
+    "redis": "5.8.2",
+    "sharp": "0.34.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "validator": "13.15.15",
+    "winston": "3.17.0"
   },
   "devDependencies": {
-    "@nx/jest": "latest",
-    "@swc/jest": "latest",
-    "@swc/core": "1.13.5",
-    "jest": "latest"
+    "@eslint/js": "^9.34.0",
+    "@nx/jest": "21.4.1",
+    "@swc/core": "~1.13.5",
+    "@swc/jest": "~0.2.38",
+    "@types/bcrypt": "6.0.0",
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "2.8.19",
+    "@types/email-templates": "10.0.4",
+    "@types/express": "5.0.3",
+    "@types/jsonwebtoken": "9.0.10",
+    "@types/ms": "^2.1.0",
+    "@types/multer": "2.0.0",
+    "@types/node": "24.3.0",
+    "@types/nodemailer": "7.0.1",
+    "@types/randomstring": "1.3.0",
+    "@types/swagger-ui-express": "^4.1.8",
+    "@types/validator": "13.15.3",
+    "@typescript-eslint/eslint-plugin": "8.42.0",
+    "@typescript-eslint/parser": "8.42.0",
+    "cpy-cli": "^6.0.0",
+    "cross-env": "10.0.0",
+    "eslint": "9.34.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-prettier": "5.5.4",
+    "eslint-plugin-unicorn": "60.0.0",
+    "jest": "^30.0.2",
+    "ms": "^2.1.3",
+    "prettier": "^3.6.2",
+    "ts-node": "10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsc-alias": "1.8.16",
+    "tsconfig-paths": "4.2.0",
+    "tsx": "^4.20.5",
+    "typescript": "5.8.3"
   }
 }

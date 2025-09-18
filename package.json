@@ -10,7 +10,20 @@
     "frontend": "nx show project @mono-turbo-nx/frontend",
     "backend": "nx show project @mono-turbo-nx/backend",
     "ci": "npx nx run-many -t lint test build typecheck --skip-nx-cache",
-    "ci:f2e2": "nx run @mono-turbo-nx/frontend-e2e:e2e-ci"
+    "ci:f2e2": "nx run @mono-turbo-nx/frontend-e2e:e2e-ci",
+    "build:frontend": "nx build frontend",
+    "build:frontend:dev": "nx build frontend:development",
+    "frontend:dev": "nx serve frontend",
+    "frontend:start": "nx serve frontend:production",
+    "frontend:lint": "nx lint frontend",
+    "frontend:typecheck": "nx typecheck frontend",
+    "frontend:format": "nx format frontend",
+    "frontend:project": "nx show project @mono-turbo-nx/frontend --web",
+    "graph": "nx graph",
+    "affected:graph": "nx affected:graph",
+    "affected:test": "nx affected:test",
+    "affected:e2e": "nx affected:e2e",
+    "backend:dev": "nx dev backend"
   },
   "private": true,
   "devDependencies": {
@@ -73,5 +86,6 @@
     "next": "~15.2.4",
     "react": "19.0.0",
     "react-dom": "19.0.0"
-  }
+  },
+  "packageManager": "pnpm@10.17.0+sha512.fce8a3dd29a4ed2ec566fb53efbb04d8c44a0f05bc6f24a73046910fb9c3ce7afa35a0980500668fa3573345bd644644fa98338fa168235c80f4aa17aa17fbef"
 }
