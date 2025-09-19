@@ -1,4 +1,4 @@
-import { Request, RequestHandler } from 'express'
+import type { RequestHandler } from 'express'
 import multer, { FileFilterCallback } from 'multer'
 
 import { ImageSizeInMb, Mimetype } from '@/constants'
@@ -7,7 +7,7 @@ import { joinRelativeToMainPath } from '@/utils/paths'
 
 // Multer file filter
 const fileFilter = (
-  _: Request,
+  _: any,
   file: Express.Multer.File,
   cb: FileFilterCallback
 ) => {

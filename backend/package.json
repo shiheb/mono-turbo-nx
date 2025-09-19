@@ -25,9 +25,9 @@
             "backend/src/assets",
             "backend/.env",
             {
-              "input": "backend/src/templates",
+              "input": "backend/templates",
               "output": "templates",
-              "glob": "**/*"
+              "glob": "**/*.ejs"
             }
           ],
           "esbuildOptions": {

@@ -3,12 +3,11 @@ import mime from 'mime'
 import { join } from 'path'
 import fs from 'fs/promises'
 
-import { IMedia } from '@/contracts/media'
+import type { IMedia } from '@/contracts/media'
 import { joinRelativeToMainPath } from '@/utils/paths'
 
 export class Image {
   private image: Express.Multer.File | IMedia
-
   private sharpInstance: Sharp
 
   constructor(image: Express.Multer.File | IMedia) {
@@ -44,7 +43,6 @@ export class Image {
     }
 
     await this.createDirectoryIfNeeded(joinRelativeToMainPath(conversionsPath))
-
     await this.saveFile(fileFullPath)
 
     return filePath

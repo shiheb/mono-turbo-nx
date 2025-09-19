@@ -15,7 +15,6 @@ export default [
       unicorn: unicorn
     },
     rules: {
-      '@typescript-eslint/no-explicit-any': 'error',
       'prettier/prettier': ['error', { endOfLine: 'auto' }],
       'arrow-parens': ['error', 'as-needed'],
       'space-in-parens': ['error', 'never'],
@@ -32,7 +31,6 @@ export default [
       'no-sequences': 'error',
       'quote-props': ['error', 'as-needed'],
       'jsx-quotes': ['error', 'prefer-double'],
-      'no-console': 'error',
       'no-multi-spaces': 'error',
       'padded-blocks': ['error', 'never'],
       'arrow-spacing': ['error', { before: true, after: true }],
@@ -49,7 +47,10 @@ export default [
       'semi': ['error', 'never'],
       'unicorn/filename-case': ['error', { case: 'camelCase' }],
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': 'off'
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      'no-console': 'off',
+      'no-undef': 'off'
     }
   },
   {

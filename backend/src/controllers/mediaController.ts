@@ -1,10 +1,10 @@
-import { Response } from 'express'
+import type { Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import winston from 'winston'
 
 import { mediaService } from '@/services'
 import { Image } from '@/infrastructure/image'
-import { IContextRequest, IUserRequest } from '@/contracts/request'
+import type { IContextRequest, IUserRequest } from '@/contracts/request'
 import { appUrl } from '@/utils/paths'
 
 export const mediaController = {
