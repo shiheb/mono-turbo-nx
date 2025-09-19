@@ -1,15 +1,15 @@
 import 'dotenv/config'
 import '@/infrastructure/logger'
+import helmet from 'helmet'
 import express, { Express } from 'express'
 import { mongoose, redis } from '@/dataSources'
 import { authMiddleware, notFoundMiddleware } from '@/middlewares'
 import { router } from '@/routes'
-import { i18next, i18nextHttpMiddleware } from '@/i18n'
+import { i18next, i18nextHttpMiddleware } from './i18n'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import {
   cookieParserMiddleware,
-  helmetMiddleware,
   httpsMiddleware,
   corsMiddleware
 } from './middlewares/securityMiddleware'
@@ -41,19 +41,26 @@ if (process.env.NODE_ENV === 'development') {
     })
   })
 }
-
+const i18nextPathParams = () => i18next
 app.use(
-  helmetMiddleware,
-  corsMiddleware,
-  express.json({ limit: '10mb' }),
-  express.urlencoded({ limit: '10mb', extended: true }),
-  cookieParserMiddleware,
-  httpsMiddleware,
-  i18nextHttpMiddleware.handle(i18next),
-  authMiddleware,
-  router,
-  notFoundMiddleware
+  helmet({
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+      preload: true
+    }
+  })
 )
+app.use(corsMiddleware)
+app.use(express.json({ limit: '10mb' }))
+app.use(express.urlencoded({ limit: '10mb', extended: true }))
+app.use(cookieParserMiddleware)
+app.use(httpsMiddleware)
+app.use(i18nextHttpMiddleware(i18nextPathParams()))
+
+app.use(authMiddleware)
+app.use(router)
+app.use(notFoundMiddleware)
 
 app.listen(process.env.APP_PORT, () => {
   winston.info(`✅ Server is listening on port ${process.env.APP_PORT}`)

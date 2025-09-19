@@ -1,20 +1,14 @@
 import i18next from 'i18next'
-import i18nextHttpMiddleware from 'i18next-http-middleware'
+import { LanguageDetector, handle } from 'i18next-http-middleware'
+import { join } from 'path'
 
-import translationEn from './translations/en.json'
-import translationKa from './translations/ka.json'
-
-i18next.use(i18nextHttpMiddleware.LanguageDetector).init({
-  detection: {
-    order: ['header'],
-    lookupHeader: 'accept-language'
-  },
-  preload: ['en', 'ka'],
+i18next.use(LanguageDetector).init({
   fallbackLng: 'en',
+  preload: ['en', 'ka'],
   resources: {
-    en: { translation: translationEn },
-    ka: { translation: translationKa }
+    en: { translation: require(join(__dirname, 'translations/en.json')) },
+    ka: { translation: require(join(__dirname, 'translations/ka.json')) }
   }
 })
 
-export { i18next, i18nextHttpMiddleware }
+export { i18next, handle as i18nextHttpMiddleware }

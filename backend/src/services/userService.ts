@@ -1,8 +1,47 @@
 import { ClientSession, ObjectId } from 'mongoose'
-import winston from 'winston'
+
 import { User } from '@/models'
 
-export const userService = {
+interface UserService {
+  create: (
+    data: { email: string; password: string; verified?: boolean },
+    session?: ClientSession
+  ) => any
+  getById: (userId: ObjectId) => any
+  getByEmail: (email: string) => any
+  isExistByEmail: (email: string) => any
+  updatePasswordByUserId: (
+    userId: ObjectId,
+    password: string,
+    session?: ClientSession
+  ) => any
+  updateVerificationAndEmailByUserId: (
+    userId: ObjectId,
+    email: string,
+    session?: ClientSession
+  ) => any
+  updateProfileByUserId: (
+    userId: ObjectId,
+    data: { firstName: string; lastName: string },
+    session?: ClientSession
+  ) => any
+  updateEmailByUserId: (
+    userId: ObjectId,
+    email: string,
+    session?: ClientSession
+  ) => any
+  deleteById: (userId: ObjectId, session?: ClientSession) => any
+  addResetPasswordToUser: (
+    data: { userId: ObjectId; resetPasswordId: ObjectId },
+    session?: ClientSession
+  ) => Promise<void>
+  addVerificationToUser: (
+    data: { userId: ObjectId; verificationId: ObjectId },
+    session?: ClientSession
+  ) => Promise<void>
+}
+
+export const userService: UserService = {
   create: (
     {
       email,
@@ -42,7 +81,7 @@ export const userService = {
       params = data
     }
 
-    return User.updateOne(...params)
+    return User.updateOne(params ?? data)
   },
 
   updateVerificationAndEmailByUserId: (
@@ -60,7 +99,7 @@ export const userService = {
       params = data
     }
 
-    return User.updateOne(...params)
+    return User.updateOne(params ?? data)
   },
 
   updateProfileByUserId: (
@@ -78,7 +117,7 @@ export const userService = {
       params = data
     }
 
-    return User.updateOne(...params)
+    return User.updateOne(params ?? data)
   },
 
   updateEmailByUserId: (
@@ -96,7 +135,7 @@ export const userService = {
       params = data
     }
 
-    return User.updateOne(...params)
+    return User.updateOne(params ?? data)
   },
 
   deleteById: (userId: ObjectId, session?: ClientSession) =>

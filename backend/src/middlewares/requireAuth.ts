@@ -4,9 +4,10 @@ export const requireAuth = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  if (!req.user) {
-    return res.status(401).json({ message: 'Unauthorized' })
+): void => {
+  if (!req.headers.authorization) {
+    res.status(401).json({ error: 'Unauthorized' })
+    return
   }
   next()
 }

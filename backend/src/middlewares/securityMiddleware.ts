@@ -1,7 +1,8 @@
 import cors from 'cors'
-import helmet from 'helmet'
+
 import cookieParser from 'cookie-parser'
 import { StatusCodes } from 'http-status-codes'
+import express, { Request, Response, NextFunction } from 'express'
 
 const allowedOrigins = ['*']
 // const allowedOrigins = [process.env.CLIENT_URL]
@@ -17,17 +18,13 @@ export const corsMiddleware = cors({
   optionsSuccessStatus: StatusCodes.OK
 })
 
-export const helmetMiddleware = helmet({
-  hsts: {
-    maxAge: 31536000,
-    includeSubDomains: true,
-    preload: true
-  }
-})
+export const cookieParserMiddleware: express.RequestHandler = cookieParser()
 
-export const cookieParserMiddleware = cookieParser()
-
-export const httpsMiddleware = (req, res, next) => {
+export const httpsMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   if (!req.secure && process.env.NODE_ENV === 'production') {
     return res.redirect(`https://${req.headers.host}${req.url}`)
   }

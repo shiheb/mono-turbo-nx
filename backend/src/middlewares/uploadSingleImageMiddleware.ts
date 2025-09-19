@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { StatusCodes, ReasonPhrases } from 'http-status-codes'
 
 import { uploadSingleImage } from '@/infrastructure/upload'
@@ -8,7 +8,7 @@ export const uploadSingleImageMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   try {
     uploadSingleImage(req, res, err => {
       if (err || !req.file) {
@@ -29,7 +29,7 @@ export const uploadSingleImageMiddleware = (
       return next()
     })
   } catch {
-    return res.status(StatusCodes.BAD_REQUEST).json({
+    res.status(StatusCodes.BAD_REQUEST).json({
       message: ReasonPhrases.BAD_REQUEST,
       status: StatusCodes.BAD_REQUEST
     })

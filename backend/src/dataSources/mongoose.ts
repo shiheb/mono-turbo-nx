@@ -1,7 +1,7 @@
 import mongooseDefault from 'mongoose'
 import winston from 'winston'
 
-const { connect, connection, disconnect } = mongooseDefault
+const { connect, disconnect } = mongooseDefault
 
 export const mongoose = {
   run: async () => {

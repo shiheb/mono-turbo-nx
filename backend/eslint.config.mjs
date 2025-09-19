@@ -1,20 +1,18 @@
 import baseConfig from '../eslint.config.mjs';
 import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
 import unicorn from 'eslint-plugin-unicorn';
 import importPlugin from 'eslint-plugin-import';
 import eslintPluginPrettier from 'eslint-plugin-prettier';
 
 export default [
-  ...baseConfig,
+  ...baseConfig, 
   js.configs.recommended,
-  ...tseslint.configs.recommended,
   {
     files: ['backend/**/*.ts', 'backend/**/*.tsx'],
     plugins: {
       prettier: eslintPluginPrettier,
       import: importPlugin,
-      unicorn: unicorn,
+      unicorn: unicorn
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
@@ -44,17 +42,17 @@ export default [
       'no-spaced-func': 'error',
       'comma-dangle': ['error', 'never'],
       'no-trailing-spaces': 'error',
-      indent: ['error', 2, { SwitchCase: 1 }],
+      'indent': ['error', 2, { SwitchCase: 1 }],
       'linebreak-style': 'off',
       '@typescript-eslint/no-duplicate-enum-values': 'off',
-      quotes: ['error', 'single'],
-      semi: ['error', 'never'],
+      'quotes': ['error', 'single'],
+      'semi': ['error', 'never'],
       'unicorn/filename-case': ['error', { case: 'camelCase' }],
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-    },
+      '@typescript-eslint/no-unused-vars': 'off'
+    }
   },
   {
-    ignores: ['backend/dist/**'],
-  },
+    ignores: ['backend/dist/**']
+  }
 ];

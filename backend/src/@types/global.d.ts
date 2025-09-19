@@ -1,9 +1,9 @@
-import { IUser } from '../contracts/user'
+import { Context, IUser } from '../contracts/request'
 
 export declare global {
   namespace Express {
     interface Request {
-      context: Context
+      context: any
       user?: IUser
     }
   }

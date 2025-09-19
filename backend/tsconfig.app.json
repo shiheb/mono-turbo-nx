@@ -15,11 +15,12 @@
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
     "baseUrl": "./src",
+    "resolveJsonModule": true,
     "paths": {
       "@/*": ["*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/**/*.json"],
   "exclude": [
     "out-tsc",
     "dist",

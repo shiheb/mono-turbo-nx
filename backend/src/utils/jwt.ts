@@ -1,7 +1,7 @@
 import jwt, { SignOptions } from 'jsonwebtoken'
 import { ObjectId } from 'mongoose'
 import winston from 'winston'
-import ms from 'ms'
+import ms, { type StringValue } from 'ms'
 import { IAccessToken, IJwtUser } from '@/contracts/jwt'
 
 if (!process.env.JWT_PRIVATE_KEY || !process.env.JWT_PUBLIC_KEY) {
@@ -10,7 +10,10 @@ if (!process.env.JWT_PRIVATE_KEY || !process.env.JWT_PUBLIC_KEY) {
 
 const privateKey = process.env.JWT_PRIVATE_KEY.replace(/\\n/g, '\n')
 const publicKey = process.env.JWT_PUBLIC_KEY.replace(/\\n/g, '\n')
-const expiresInMs = ms(process.env.JWT_EXPIRATION || '30m')
+
+// Assert as StringValue for TypeScript
+const jwtExpiration = (process.env.JWT_EXPIRATION ?? '30m') as StringValue
+const expiresInMs = ms(jwtExpiration)
 const expiresIn = Math.floor(expiresInMs / 1000)
 
 export const jwtSign = (id: ObjectId): IAccessToken => {
@@ -26,7 +29,7 @@ export const jwtSign = (id: ObjectId): IAccessToken => {
       message: error instanceof Error ? error.message : String(error),
       stack: error instanceof Error ? error.stack : undefined
     })
-    throw error // rethrow to let caller handle it
+    throw error
   }
 }
 

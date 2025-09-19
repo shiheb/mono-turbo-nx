@@ -1,8 +1,8 @@
 import { Request } from 'express'
-import { ParamsDictionary } from 'express-serve-static-core'
 import { Document } from 'mongoose'
 
 import { IUser } from './user'
+export type ParamsDictionary = Record<string, string>
 
 export interface IContextRequest<T> extends Omit<Request, 'context'> {
   context: T

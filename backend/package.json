@@ -60,7 +60,7 @@
         "options": {
           "commands": [
             "tsc --project backend/tsconfig.app.json --noEmit",
-            "tsc-alias -p backend/tsconfig.app.json"
+            "npx tsc-alias -p backend/tsconfig.app.json"
           ],
           "parallel": false
         }
@@ -151,7 +151,8 @@
         "options": {
           "lintFilePatterns": [
             "backend/src/**/*.ts"
-          ]
+          ],
+          "config": "backend/eslint.config.mjs"
         }
       }
     }
@@ -197,7 +198,9 @@
     "@types/multer": "2.0.0",
     "@types/node": "24.3.0",
     "@types/nodemailer": "7.0.1",
+    "@types/qs": "^6.14.0",
     "@types/randomstring": "1.3.0",
+    "@types/swagger-jsdoc": "6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "@types/validator": "13.15.3",
     "@typescript-eslint/eslint-plugin": "8.42.0",
@@ -217,6 +220,7 @@
     "tsc-alias": "1.8.16",
     "tsconfig-paths": "4.2.0",
     "tsx": "^4.20.5",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "typescript-eslint": "^8.42.0"
   }
 }

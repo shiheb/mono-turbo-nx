@@ -4,7 +4,24 @@ import { Media } from '@/models'
 import { CreateMediaPayload, UpdateMediaPayload } from '@/contracts/media'
 import { MediaRefType } from '@/constants'
 
-export const mediaService = {
+interface MediaService {
+  getById: (mediaId: ObjectId) => any
+  findOneByRef: (data: { refType: MediaRefType; refId: ObjectId }) => any
+  findManyByRef: (data: { refType: MediaRefType; refId: ObjectId }) => any
+  create: (data: CreateMediaPayload, session?: ClientSession) => any
+  updateById: (
+    mediaId: ObjectId,
+    data: UpdateMediaPayload,
+    session?: ClientSession
+  ) => any
+  deleteById: (mediaId: ObjectId, session?: ClientSession) => any
+  deleteManyByRef: (
+    data: { refType: MediaRefType; refId: ObjectId },
+    session?: ClientSession
+  ) => any
+}
+
+export const mediaService: MediaService = {
   getById: (mediaId: ObjectId) => Media.findById(mediaId),
 
   findOneByRef: ({
@@ -60,7 +77,7 @@ export const mediaService = {
       params = data
     }
 
-    return Media.updateOne(...params)
+    return Media.updateOne(params ?? data)
   },
 
   deleteById: (mediaId: ObjectId, session?: ClientSession) =>

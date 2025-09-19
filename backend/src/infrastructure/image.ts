@@ -76,8 +76,9 @@ export class Image {
         })
 
       await Promise.all(promises)
-    } catch {
-      return null
+    } catch (error) {
+      console.error('Error deleting file:', error)
+      return Promise.resolve()
     }
   }
 
@@ -100,8 +101,8 @@ export class Image {
   private async saveFile(fileFullPath: string) {
     try {
       await this.sharpInstance.toFile(fileFullPath)
-    } catch {
-      return null
+    } catch (error) {
+      console.error('Error saving file:', error)
     }
   }
 }

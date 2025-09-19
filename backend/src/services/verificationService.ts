@@ -1,66 +1,74 @@
-import { ClientSession, ObjectId } from 'mongoose'
-
+import { ClientSession, ObjectId, Document } from 'mongoose'
 import { Verification } from '@/models'
 import { createDateNow } from '@/utils/dates'
 
-export const verificationService = {
+// Mongoose typed document for Verification
+export interface IVerification {
+  user: ObjectId
+  email: string
+  accessToken: string
+  expiresIn: Date
+}
+
+export type VerificationDoc = Document<unknown, any, IVerification> &
+  IVerification
+
+// Explicit service type
+export type VerificationServiceType = {
   create: (
-    {
-      userId,
-      email,
-      accessToken,
-      expiresIn
-    }: {
+    params: {
       userId: ObjectId
       email: string
       accessToken: string
       expiresIn: Date
     },
     session?: ClientSession
-  ) =>
-    new Verification({
-      user: userId,
-      email,
-      accessToken,
-      expiresIn
-    }).save({ session }),
+  ) => Promise<VerificationDoc>
+  findOneAndUpdateByUserIdAndEmail: (
+    params: {
+      userId: ObjectId
+      email: string
+      accessToken: string
+      expiresIn: Date
+    },
+    session?: ClientSession
+  ) => Promise<VerificationDoc | null>
+  getByValidAccessToken: (
+    accessToken: string
+  ) => Promise<VerificationDoc | null>
+  deleteManyByUserId: (
+    userId: ObjectId,
+    session?: ClientSession
+  ) => Promise<{ deletedCount?: number }>
+}
+
+export const verificationService: VerificationServiceType = {
+  create: ({ userId, email, accessToken, expiresIn }, session) =>
+    new Verification({ user: userId, email, accessToken, expiresIn }).save({
+      session
+    }),
 
   findOneAndUpdateByUserIdAndEmail: (
-    {
-      userId,
-      email,
-      accessToken,
-      expiresIn
-    }: {
-      userId: ObjectId
-      email: string
-      accessToken: string
-      expiresIn: Date
-    },
-    session?: ClientSession
+    { userId, email, accessToken, expiresIn },
+    session
   ) => {
-    const data = [
-      { user: userId, email },
-      { user: userId, email, accessToken, expiresIn }
-    ]
+    const filter = { user: userId, email }
+    const update = { user: userId, email, accessToken, expiresIn }
+    const options = session ? { session, new: true } : { new: true }
 
-    let params = null
-
-    if (session) {
-      params = [...data, { session }]
-    } else {
-      params = data
-    }
-
-    return Verification.findOneAndUpdate(...params)
+    return Verification.findOneAndUpdate(
+      filter,
+      update,
+      options
+    ) as Promise<VerificationDoc | null>
   },
 
-  getByValidAccessToken: (accessToken: string) =>
+  getByValidAccessToken: accessToken =>
     Verification.findOne({
       accessToken,
       expiresIn: { $gte: createDateNow() }
-    }),
+    }) as Promise<VerificationDoc | null>,
 
-  deleteManyByUserId: (userId: ObjectId, session?: ClientSession) =>
+  deleteManyByUserId: (userId, session) =>
     Verification.deleteMany({ user: userId }, { session })
 }
