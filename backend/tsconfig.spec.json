@@ -1,0 +1,36 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "outDir": "dist",
+    "types": ["jest", "node"],
+    "rootDir": "src",
+    "tsBuildInfoFile": "dist/tsconfig.spec.tsbuildinfo",
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    }
+  },
+  "include": [
+    "jest.config.cjs",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "out-tsc",
+    "dist",
+    "eslint.config.js",
+    "eslint.config.cjs",
+    "eslint.config.mjs",
+    "node_modules"
+  ]
+}
