@@ -1,0 +1,33 @@
+'use client'
+import { currentYear } from '@/common/constants'
+import Background2 from '@/components/Background2'
+import type { ChildrenType } from '@/types/other'
+import Link from 'next/link'
+import { useEffect } from 'react'
+
+const AuthLayout = ({ children }: ChildrenType) => {
+  useEffect(() => {
+    document.body.classList.add('bg-slate-900', 'relative', 'h-full')
+    return () => {
+      document.body.classList.remove('bg-slate-900', 'relative', 'h-full')
+    }
+  }, [])
+  return (
+    <>
+      <Background2 />
+      <section className="flex w-full items-center px-0 py-6 lg:h-screen lg:p-10">
+        <div className="container">{children}</div>
+      </section>
+      <footer className="bottom-0 end-0 start-0 py-3 2xl:fixed">
+        <div className="container">
+          <p className="text-center text-base font-medium text-default-200">
+            {currentYear} © WebAi -{' '}
+            <Link href="">Design &amp; Crafted ❤️ by Coderthemes</Link>
+          </p>
+        </div>
+      </footer>
+    </>
+  )
+}
+
+export default AuthLayout
